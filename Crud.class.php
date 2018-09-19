@@ -36,6 +36,14 @@ class Crud{
 		}
 	}
 
+	public function excluir($id){
+		$sql = "DELETE FROM contatos WHERE id = :id";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(':id', $id);
+		$sql->execute();
+		return true;
+	}
+
 
 
 

@@ -40,8 +40,9 @@
 						<td><?php echo $dado['nome']; ?></td>
 						<td><?php echo $dado['telefone']; ?></td>
 						<td>
-							<a href="" class="btn btn-success">Editar</a>
-							<a href="" class="btn btn-danger">Excluir</a>
+							<a href="editar.php?id=<?php echo $dado['id']; ?>" class="btn btn-success">Editar</a>
+							<a href="excluir.php?id=<?php echo $dado['id']; ?>" class="btn btn-danger" data-toggle="modal" data-target="#excluir">Excluir</a>
+							<?php  require 'modals/excluir.modal.php'; ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>
