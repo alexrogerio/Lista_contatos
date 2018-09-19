@@ -1,3 +1,8 @@
+<?php 
+	require 'Crud.class.php';
+	$c = new Crud();
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +15,42 @@
 </head>
 	<body>	
 		<div class="container">
-			
+			<div id="btnAdd">
+				<button class="btn btn-primary" data-toggle="modal" data-target="#adicionar">Adicionar</button>
+				<?php  require 'modals/adicionar.modal.php'; ?>
+			</div>
+			<div id="tabela">
+				<div class="table-responsive">
+					<table class="table table-striped table-bordered">
+						<thead class="thead-light">
+							<tr>
+								<th>Email</th>
+								<th>Nome</th>
+								<th>Telefone</th>
+								<th>Ação</th>
+						</tr>
+				</thead>
+				<tbody>
+				<?php 
+					$info = $c->getAll();
+					foreach($info as $dado):
+				?>
+					<tr>
+						<td><?php echo $dado['email']; ?></td>
+						<td><?php echo $dado['nome']; ?></td>
+						<td><?php echo $dado['telefone']; ?></td>
+						<td>
+							<a href="" class="btn btn-success">Editar</a>
+							<a href="" class="btn btn-danger">Excluir</a>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+			</div>
 		</div>
+		</div>
+	
 
 
 	 	<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
