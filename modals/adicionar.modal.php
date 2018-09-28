@@ -45,7 +45,7 @@
 										<input id="nome" type="text" name="nome" required class="form-control">
 									</div><div class="form-group">
 										<label for="fone"><small>Telefone:</small></label>
-										<input id="fone" type="tel" name="telefone" required class="form-control">
+										<input id="fone" type="tel" name="telefone" class="form-control">
 									</div>
 									<div class="form-group">
 										<input class="btn btn-success" type="submit" value="Cadastrar">

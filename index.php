@@ -1,6 +1,12 @@
 <?php 
+	
 	require 'Crud.class.php';
+	if(!isset($_SESSION['log'])){
+		header("Location: login.php");
+		exit;
+	}
 	$c = new Crud();
+
 
 ?>
 <!DOCTYPE html>
@@ -18,6 +24,7 @@
 			<div id="btnAdd">
 				<button class="btn btn-primary" data-toggle="modal" data-target="#adicionar">Adicionar</button>
 				<?php  require 'modals/adicionar.modal.php'; ?>
+				<?php  require 'modals/editar.modal.php'; ?>
 			</div>
 			<div id="tabela">
 				<div class="table-responsive">
@@ -34,18 +41,22 @@
 				<?php 
 					$info = $c->getAll();
 					foreach($info as $dado):
+					if($_SESSION['log'] != $dado['id']):
 				?>
 					<tr>
 						<td><?php echo $dado['email']; ?></td>
 						<td><?php echo $dado['nome']; ?></td>
 						<td><?php echo $dado['telefone']; ?></td>
 						<td>
-							<a href="editar.php?id=<?php echo $dado['id']; ?>" class="btn btn-success">Editar</a>
+							<a href="excluir.php?id=<?php echo $dado['id']; ?>" class="btn btn-success" data-toggle="modal" data-target="#editar">Editar</a>
 							<a href="excluir.php?id=<?php echo $dado['id']; ?>" class="btn btn-danger" data-toggle="modal" data-target="#excluir">Excluir</a>
 							<?php  require 'modals/excluir.modal.php'; ?>
 						</td>
 					</tr>
-				<?php endforeach; ?>
+				<?php 
+					endif;
+				endforeach; 
+				?>
 				</tbody>
 			</table>
 			</div>

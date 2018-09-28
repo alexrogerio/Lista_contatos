@@ -10,6 +10,26 @@ class Crud{
 			echo "Banco não Encontrado, Erro: ".$e->getMessage();
 		}
 	}
+	public function login($email, $senha){
+		if($this->verificarEmail($email)){
+			$sql = "SELECT * FROM contatos where email = :email AND senha = :senha";
+			$sql = $this->pdo->prepare($sql);
+			$sql->bindValue(':email', $email);
+			$sql->bindValue(':senha', md5($senha));
+			$sql->execute();
+
+			if($sql->rowCount() > 0){
+				$sql = $sql->fetch();
+				$_SESSION['log'] = $sql['id'];
+				return true;
+			}else {
+				return false;
+			}
+		}else {
+			return false;
+		}
+	}
+
 	public function add($email,$nome,$fone){
 		if($this-> verificarEmail($email) == false){
 			$sql = "INSERT INTO contatos(email,nome,telefone) VALUES (:email,:nome,:telefone)";
@@ -36,16 +56,30 @@ class Crud{
 		}
 	}
 
-	public function excluir($id){
-		$sql = "DELETE FROM contatos WHERE id = :id";
+	public function getUser($id){
+		$sql = "SELECT * FROM contatos WHERE id = :id";
 		$sql = $this->pdo->prepare($sql);
 		$sql->bindValue(':id', $id);
 		$sql->execute();
-		return true;
+
+		if($sql->rowCount() > 0){
+			return $sql->fetch();
+		}else {
+			return array();
+		}
 	}
 
-
-
+	public function excluir($id){
+		if($_SESSION['log'] != $id){
+			$sql = "DELETE FROM contatos WHERE id = :id";
+			$sql = $this->pdo->prepare($sql);
+			$sql->bindValue(':id', $id);
+			$sql->execute();
+			return true;
+		}else {
+			return false;
+		}
+	}
 
 	private function verificarEmail($email){
 		$sql = "SELECT * FROM contatos WHERE email = :email";
@@ -55,7 +89,7 @@ class Crud{
 
 		if($sql->rowCount() > 0){
 			return true;
-		}else {
+		}else {	
 			return false;
 		}
 	}
